@@ -77,45 +77,36 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     # global esc_pressed
     # esc_pressed = False
     pyautogui.FAILSAFE=False
-    pyautogui.PAUSE=0.002
+    pyautogui.PAUSE=waittime
     time1 = time.time()   
-    window.activate()  # 対象の画面をアクティブ化 
-    time.sleep(0.002)
-    # activate_window(window)
-    # pyautogui.click(window.left+10, window.top+10)
+    try:
+        window.activate()  # 対象の画面をアクティブ化 
+        # activate_window(window)
+        # pyautogui.click(window.left+10, window.top+10)
+    except Exception as e:
+        time.sleep(waittime)
+        return
+    time.sleep(waittime)
+    
     time2 = time.time()
     dtime = time2 - time1
     print('activate time: {:g}'.format(dtime))
-    # --- 出力リスト ---
-    outlist = []
-    outlist.append(['cnt', 'total_time', 'dtime'])
-    # ---　ループを抜けるためのキーボード検知用 ---
-    # listener = keyboard.Listener(on_press=on_press_key)
-    # listener.start()
     # ---
-    cnt = 0
     time0 = time.time()  # 初期時間
-    while True:
-        time1 = time.time()   
-        # --- メイン処理 ---
+    time1 = time.time()   
+    # --- メイン処理 ---
+    try:
         pyautogui.click(x=tposx, y=tposy)  # 所定の位置に移動してクリック。クリック内容を変える場合は、本行を変更。
-        # if  esc_pressed: # Escが押されたらループを抜ける
-        #     break
-        # time.sleep(waittime)  # 所定の時間待機
-        # --- 出力用 ---
-        cnt += 1
-        time2 = time.time()
-        dtime = time2 - time1
-        totaltime = time2 - time0
-        outlist.append([cnt, totaltime, dtime])
-        if cnt%printstep == 0:
-            print('cnt: {}, time: {:g}'.format(cnt, dtime))
+    except Exception as e:
+        time.sleep(waittime)
+        return
+    time2 = time.time()
+    dtime = time2 - time1
+    totaltime = time2 - time0
+    print('click time: {:g}'.format(dtime))
 
-        break
     # ---
-    # listener.stop()  # キーボード検知を停止
-    print('\n --- End: Auto Click ---')
-    return outlist
+    return 
 
 # left, top = 312, 160
 # ヘルプボタン: 970, 842 = 658, 682
@@ -123,29 +114,35 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
 # get_cursor_position()
 
 
-titles=[
-    "[#] [6Mur 3-1] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-2] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-3] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-4] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-5] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-6] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-7] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-8] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-9] Doomsday: Last Survivors [#]",
-    "[#] [6Mur 3-10] Doomsday: Last Survivors [#]",
-    # "Doomsday: Last Survivors"
-    # "[#] [6Mur 4-1] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-2] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-3] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-4] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-5] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-6] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-7] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-8] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-9] Doomsday: Last Survivors [#]",
-    # "[#] [6Mur 4-10] Doomsday: Last Survivors [#]",
-]
+# titles=[
+#     "[#] [6Mur 3-1] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-2] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-3] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-4] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-5] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-6] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-7] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-8] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-9] Doomsday: Last Survivors [#]",
+#     "[#] [6Mur 3-10] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-1] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-2] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-3] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-4] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-5] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-6] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-7] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-8] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-9] Doomsday: Last Survivors [#]",
+#     # "[#] [6Mur 4-10] Doomsday: Last Survivors [#]",
+# ]
+
+with open('titles.txt', 'r', encoding='utf-8') as f:
+    lines = f.readlines()
+
+# 各行から改行文字を取り除く（必要に応じて）
+titles = [line.strip() for line in lines]
+
 
 listener = keyboard.Listener(on_press=on_press_key)
 listener.start()
@@ -156,11 +153,11 @@ while True:
     if  esc_pressed: # Escが押されたらループを抜ける
         break
     for title in titles:
+        print(title)
+        if  esc_pressed: # Escが押されたらループを抜ける
+            break
         window = get_window(title)
         if window:
-            # activate_window(window)
-            auto_click(window.left + 658, window.top + 682, window, waittime=0.2)
-            # time.sleep(1.2)
-            # esc_pressed = True
+            auto_click(window.left + 658, window.top + 682, window, waittime=0.005)
 
 listener.stop()  # キーボード検知を停止

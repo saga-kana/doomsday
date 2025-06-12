@@ -22,27 +22,6 @@ def get_window(window_title):
         return None
     
 
-def on_click_for_pos(x, y, button, pressed):
-    if pressed:
-        return False
-
-
-def get_cursor_position():
-    # マウスのクリック検知
-    with mouse.Listener(on_click=on_click_for_pos) as listener:
-        listener.join()
-    # ---
-    x, y = pyautogui.position()  # カーソルの位置を取得
-    print('カーソルの位置: x = {}, y = {}'.format(x, y))
-    # --- ウィンドウの取得 ---
-    time.sleep(1)
-    active_window = gw.getActiveWindow()
-    if not active_window is None:
-        print('対象ウィンドウ: {}'.format(active_window.title))
-    else:
-        print('対象ウィンドウ: なし')
-    print('\n --- END: Get Cursor Position ---')
-    return x, y, active_window
 
 def on_press_key(key):
     # Escが押されると終了
@@ -64,9 +43,9 @@ def check_window_pos(tposx, tposy, window):
 def activate_window(window):
     # window.activate() # ではエラーが生じる可能性があるため、最小化、復元で強制的にアクティブ化
     if not window is None:
-        window.activate()
-        # window.minimize()
-        # window.restore()
+        # window.activate()
+        window.minimize()
+        window.restore()
 
 def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     print(window.title, tposx, tposy)
@@ -84,8 +63,6 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     pyautogui.mouseDown()
     time.sleep(0.096)
     pyautogui.mouseUp()
-    # if  esc_pressed: # Escが押されたらループを抜ける
-    #     break
     time.sleep(waittime)  # 所定の時間待機
     # --- 出力用 ---
     time2 = time.time()
@@ -94,8 +71,6 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
 
     return 
 
-import time
-import pyautogui
 
 def click_img(img: str, **kwargs):
     # 可変長引数を代入
@@ -134,7 +109,6 @@ titles=[
     # "[#] [6Mur 3-8] Doomsday: Last Survivors [#]",
     # "[#] [6Mur 3-9] Doomsday: Last Survivors [#]",
     # "[#] [6Mur 3-10] Doomsday: Last Survivors [#]",
-    # "Doomsday: Last Survivors"
     # "[#] [6Mur 4-1] Doomsday: Last Survivors [#]",
     # "[#] [6Mur 4-2] Doomsday: Last Survivors [#]",
     # "[#] [6Mur 4-3] Doomsday: Last Survivors [#]",
@@ -145,11 +119,11 @@ titles=[
     # "[#] [6Mur 4-8] Doomsday: Last Survivors [#]",
     # "[#] [6Mur 4-9] Doomsday: Last Survivors [#]",
     # "[#] [6Mur 4-10] Doomsday: Last Survivors [#]",
-    "[#] [36k] Doomsday: Last Survivors [#]",
-    # "[#] [AssignBolt] Doomsday: Last Survivors [#]",
+    # "[#] [36k] Doomsday: Last Survivors [#]",
+    "[#] [AssignBolt] Doomsday: Last Survivors [#]",
 ]
 
-title = "[#] [36k] Doomsday: Last Survivors [#]"
+title = "[#] [AssignBolt] Doomsday: Last Survivors [#]"
 
 listener = keyboard.Listener(on_press=on_press_key)
 listener.start()
