@@ -149,6 +149,9 @@ listener.start()
 global esc_pressed
 esc_pressed = False
 
+print("マウスを画面外へ")
+time.sleep(2)
+
 while True:
     if  esc_pressed: # Escが押されたらループを抜ける
         break
