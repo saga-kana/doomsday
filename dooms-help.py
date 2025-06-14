@@ -68,7 +68,7 @@ def activate_window(window):
         window.restore()
 
 def auto_click(tposx, tposy, window, waittime=1, printstep=1):
-    print(window.title)
+    # print(window.title)
     is_click_ok = check_window_pos(tposx, tposy, window)
     if not is_click_ok:
         print('ウィンドウもしくはクリック座標が不適切なため未実行')
@@ -81,9 +81,13 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     time1 = time.time()   
     try:
         window.activate()  # 対象の画面をアクティブ化 
-        # activate_window(window)
-        # pyautogui.click(window.left+10, window.top+10)
     except Exception as e:
+        time.sleep(waittime)
+        print(e)
+        try:
+            activate_window(window)
+        except Exception as e2:
+            print(e2)
         time.sleep(waittime)
         return
     time.sleep(waittime)
@@ -150,7 +154,7 @@ global esc_pressed
 esc_pressed = False
 
 print("マウスを画面外へ")
-time.sleep(2)
+time.sleep(3)
 
 while True:
     if  esc_pressed: # Escが押されたらループを抜ける
@@ -161,6 +165,6 @@ while True:
             break
         window = get_window(title)
         if window:
-            auto_click(window.left + 658, window.top + 682, window, waittime=0.005)
+            auto_click(window.left + 658, window.top + 682, window, waittime=0.05)
 
 listener.stop()  # キーボード検知を停止

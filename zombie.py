@@ -92,6 +92,47 @@ def click_img(img: str, **kwargs):
     # 指定時間の待機
     time.sleep(sleep_time)
 
+def watch_img(img: str, **kwargs):    # 可変長引数を代入
+    sleep_time = kwargs.pop('sleep_time', 0.5)  # チェック後の待機時間
+    gray_scale = kwargs.pop('gray_scale', True)  # 画像認識時のグレースケールONOFF
+    confidence = kwargs.pop('confidence', 0.8)   # 画像認識時の判定度合い
+    
+    cnt=0
+    while True:
+        print(f"\r待機中: {cnt}秒", end="")
+        sys.stdout.flush()        
+        if esc_pressed: # Escが押されたらループを抜ける
+            break
+        try:
+            pyautogui.locateCenterOnScreen(f'./img/{img}', grayscale=gray_scale, confidence=confidence)
+            time.sleep(sleep_time)
+            cnt+=1
+        except pyautogui.ImageNotFoundException:
+            return
+        
+
+def wait_img(img: str, **kwargs):    # 可変長引数を代入
+    sleep_time = kwargs.pop('sleep_time', 0.5)  # チェック後の待機時間
+    gray_scale = kwargs.pop('gray_scale', True)  # 画像認識時のグレースケールONOFF
+    confidence = kwargs.pop('confidence', 0.8)   # 画像認識時の判定度合い
+    
+    cnt=0
+    while True:
+        print(f"\r待機中: {cnt}秒", end="")
+        sys.stdout.flush()        
+        if esc_pressed: # Escが押されたらループを抜ける
+            break
+        try:
+            x, y = pyautogui.locateCenterOnScreen(f'./img/{img}', grayscale=gray_scale, confidence=confidence)
+        except pyautogui.ImageNotFoundException:
+            time.sleep(sleep_time)
+            cnt+=1
+            continue
+        print()
+        break
+        
+        
+
 # left, top = 312, 160
 # ヘルプボタン: 970, 842 = 658, 682
 # 緑ボタン: *, * = 1248, 559
@@ -123,43 +164,69 @@ titles=[
     "[#] [AssignBolt] Doomsday: Last Survivors [#]",
 ]
 
-title = "[#] [AssignBolt] Doomsday: Last Survivors [#]"
+title = "[#] [36k] Doomsday: Last Survivors [#]"
 
 listener = keyboard.Listener(on_press=on_press_key)
 listener.start()
 global esc_pressed
 esc_pressed = False
 
-while True:
-    if  esc_pressed: # Escが押されたらループを抜ける
-        break
-
-    window = get_window(title)
-    if window:
-        activate_window(window)
-        time.sleep(1)
-
-        auto_click(window.left + 44, window.top + 445, window, waittime=0.5) # 虫眼鏡
-        auto_click(window.left + 217, window.top + 465, window, waittime=0.9) # Search
-        auto_click(window.left + 666, window.top + 355, window, waittime=0.5) # ゾンビ
-        # auto_click(window.left + 960, window.top + 560, window, waittime=0.5) # ATTACK
-        click_img("ATTACK.png")
-        auto_click(window.left + 972, window.top + 209, window, waittime=0.5) # Create Squad
-        # auto_click(window.left + 1096, window.top + 245, window, waittime=0.5) # Load 1
-        auto_click(window.left + 949, window.top + 640, window, waittime=0.5) # March
-
-
-        # try:
-        #     print(pyautogui.locateOnScreen("ATTACK.png"))
-        # except Exception as e:
-        #     print(e)
-
-    # esc_pressed = True
-    for i in range(60, 0, -1):
-        print(f"\r残り {i} 秒", end='')
-        sys.stdout.flush()
-        time.sleep(1)
-        if esc_pressed: # Escが押されたらループを抜ける
+if __name__ == '__main__':
+    while True:
+        if  esc_pressed: # Escが押されたらループを抜ける
             break
 
-listener.stop()  # キーボード検知を停止
+        window = get_window(title)
+        if window:
+            activate_window(window)
+            time.sleep(1)
+
+            while True:
+                if esc_pressed:
+                    break
+                auto_click(window.left + 44, window.top + 445, window, waittime=0.5) # 虫眼鏡
+                auto_click(window.left + 217, window.top + 465, window, waittime=1.8) # Search
+                auto_click(window.left + 666, window.top + 355, window, waittime=0.5) # ゾンビ
+                # auto_click(window.left + 960, window.top + 560, window, waittime=0.5) # ATTACK
+                
+                if esc_pressed:
+                    break
+
+                try:
+                    click_img("ATTACK.png")
+                    break
+                except pyautogui.ImageNotFoundException as e:
+                    auto_click(window.left + 44, window.top + 445, window, waittime=0.5) # 虫眼鏡
+                    # auto_click(window.left + 73, window.top + 391, window, waittime=0.5) # マイナス
+                    auto_click(window.left + 360, window.top + 391, window, waittime=0.5) # プラス
+                    auto_click(window.left + 600, window.top + 400, window, waittime=1.5) # 閉じる
+            
+            if esc_pressed:
+                break
+            # create everytime
+            # auto_click(window.left + 972, window.top + 209, window, waittime=0.8) # Create Squad
+            # auto_click(window.left + 1096, window.top + 245, window, waittime=0.5) # Load 1
+
+            # peggy
+            # click_img("peggy_large.png")
+
+            # multi
+            # auto_click(window.left + 1180, window.top + 682, window, waittime=0.8) # Create Squad
+
+            # create multi
+            auto_click(window.left + 972, window.top + 265, window, waittime=0.8) # Create Squad
+            auto_click(window.left + 1000, window.top + 486, window, waittime=0.8) # Create Squad
+            auto_click(window.left + 1000, window.top + 609, window, waittime=0.8) # Create Squad
+
+
+            # auto_click(window.left + 949, window.top + 640, window, waittime=0.5) # March
+            # click_img("MARCH.png")
+
+            time.sleep(3)
+
+            # wait_img("peggy_wait.png", confidence=0.95)
+            watch_img("squad.png", confidence=0.9)
+
+            time.sleep(10)
+
+    listener.stop()  # キーボード検知を停止
