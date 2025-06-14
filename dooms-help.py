@@ -88,8 +88,8 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
             activate_window(window)
         except Exception as e2:
             print(e2)
-        time.sleep(waittime)
-        return
+            time.sleep(waittime)
+            return
     time.sleep(waittime)
     
     time2 = time.time()
