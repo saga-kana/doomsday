@@ -160,6 +160,7 @@ while True:
     if  esc_pressed: # Escが押されたらループを抜ける
         break
     sumtime = 0
+    cnt = 0
     for title in titles:
         print(title)
         if  esc_pressed: # Escが押されたらループを抜ける
@@ -169,7 +170,8 @@ while True:
             dtime = auto_click(window.left + 658, window.top + 682, window, waittime=0.05)
             if dtime:
                 sumtime += dtime
-    print(f"one cycle: {sumtime:g}")
+                cnt += 1
+    print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}")
 
 
 
