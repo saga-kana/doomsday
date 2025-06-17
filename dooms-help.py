@@ -156,6 +156,8 @@ esc_pressed = False
 print("マウスを画面外へ")
 time.sleep(3)
 
+total_time = 0
+total_cnt = 0
 while True:
     if  esc_pressed: # Escが押されたらループを抜ける
         break
@@ -171,7 +173,11 @@ while True:
             if dtime:
                 sumtime += dtime
                 cnt += 1
-    print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}")
+    print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}\n")
+    total_time += sumtime
+    total_cnt += cnt
+
+print(f"\ntotal : {total_time:g}, cnt: {total_cnt}, avg: {total_time/total_cnt}")
 
 
 
