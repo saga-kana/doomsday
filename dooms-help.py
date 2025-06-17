@@ -93,8 +93,8 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     time.sleep(waittime)
     
     time2 = time.time()
-    dtime = time2 - time1
-    print('activate time: {:g}'.format(dtime))
+    dtime1 = time2 - time1
+    print('activate time: {:g}'.format(dtime1))
     # ---
     time0 = time.time()  # 初期時間
     time1 = time.time()   
@@ -105,12 +105,12 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
         time.sleep(waittime)
         return
     time2 = time.time()
-    dtime = time2 - time1
+    dtime2 = time2 - time1
     totaltime = time2 - time0
-    print('click time: {:g}'.format(dtime))
+    print('click time: {:g}'.format(dtime2))
 
     # ---
-    return 
+    return dtime1+dtime2
 
 # left, top = 312, 160
 # ヘルプボタン: 970, 842 = 658, 682
@@ -159,12 +159,18 @@ time.sleep(3)
 while True:
     if  esc_pressed: # Escが押されたらループを抜ける
         break
+    sumtime = 0
     for title in titles:
         print(title)
         if  esc_pressed: # Escが押されたらループを抜ける
             break
         window = get_window(title)
         if window:
-            auto_click(window.left + 658, window.top + 682, window, waittime=0.05)
+            dtime = auto_click(window.left + 658, window.top + 682, window, waittime=0.05)
+            if dtime:
+                sumtime += dtime
+    print(f"one cycle: {sumtime:g}")
+
+
 
 listener.stop()  # キーボード検知を停止
