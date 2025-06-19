@@ -46,7 +46,8 @@ def get_cursor_position():
 
 def on_press_key(key):
     # Escが押されると終了
-    global esc_pressed
+    # global esc_pressed
+    print("BREAK!!!")
     if key == keyboard.Key.esc:
         esc_pressed = True
     if hasattr(key, "char") and key.char and key.char == "c":
