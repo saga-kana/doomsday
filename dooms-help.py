@@ -6,6 +6,7 @@ import csv
 import sys
 
 
+
 def get_window(window_title):
     window = gw.getWindowsWithTitle(window_title)
     nwindow = len(window)
@@ -46,11 +47,12 @@ def get_cursor_position():
 
 def on_press_key(key):
     # Escが押されると終了
-    # global esc_pressed
-    print("BREAK!!!")
+    global esc_pressed
     if key == keyboard.Key.esc:
+        print("BREAK!!!")
         esc_pressed = True
     if hasattr(key, "char") and key.char and key.char == "c":
+        print("BREAK!!!")
         esc_pressed = True
 
 
@@ -91,7 +93,11 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
             print(e2)
             time.sleep(waittime)
             return
-    time.sleep(waittime)
+    # time.sleep(waittime)
+    for _ in range(100):
+        if gw.getActiveWindow() == window:
+            break
+        time.sleep(0.002)
     
     time2 = time.time()
     dtime1 = time2 - time1
@@ -151,7 +157,7 @@ titles = [line.strip() for line in lines]
 
 listener = keyboard.Listener(on_press=on_press_key)
 listener.start()
-global esc_pressed
+# global esc_pressed
 esc_pressed = False
 
 print("マウスを画面外へ")
@@ -177,6 +183,8 @@ while True:
     print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}\n")
     total_time += sumtime
     total_cnt += cnt
+
+    time.sleep(2)
 
 print(f"\ntotal : {total_time:g}, cnt: {total_cnt}, avg: {total_time/total_cnt}")
 

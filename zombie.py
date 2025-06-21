@@ -6,6 +6,9 @@ import csv
 import sys
 
 
+# global esc_pressed
+esc_pressed = False
+
 def get_window(window_title):
     window = gw.getWindowsWithTitle(window_title)
     nwindow = len(window)
@@ -25,12 +28,13 @@ def get_window(window_title):
 
 def on_press_key(key):
     # Escが押されると終了
-    # global esc_pressed
-    print("BREAK!!!")
+    global esc_pressed
     if key == keyboard.Key.esc:
         esc_pressed = True
+        print("BREAK!!!")
     if hasattr(key, "char") and key.char and key.char == "c":
         esc_pressed = True
+        print("BREAK!!!")   
 
 
 def check_window_pos(tposx, tposy, window):
@@ -110,6 +114,7 @@ def watch_img(img: str, **kwargs):    # 可変長引数を代入
             cnt+=1
         except pyautogui.ImageNotFoundException:
             return
+    print()
         
 
 def wait_img(img: str, **kwargs):    # 可変長引数を代入
@@ -122,6 +127,7 @@ def wait_img(img: str, **kwargs):    # 可変長引数を代入
         print(f"\r待機中: {cnt}秒", end="")
         sys.stdout.flush()        
         if esc_pressed: # Escが押されたらループを抜ける
+            print()
             break
         try:
             x, y = pyautogui.locateCenterOnScreen(f'./img/{img}', grayscale=gray_scale, confidence=confidence)
@@ -169,10 +175,11 @@ title = "[#] [36k] Doomsday: Last Survivors [#]"
 
 listener = keyboard.Listener(on_press=on_press_key)
 listener.start()
-global esc_pressed
-esc_pressed = False
 
 if __name__ == '__main__':
+    print("カーソルを画面外へ")
+    time.sleep(3)
+    
     while True:
         if  esc_pressed: # Escが押されたらループを抜ける
             break
@@ -209,23 +216,28 @@ if __name__ == '__main__':
             # auto_click(window.left + 1096, window.top + 245, window, waittime=0.5) # Load 1
 
             # peggy
-            click_img("peggy_large.png")
+            # click_img("peggy_large.png")
+            # click_img("MARCH.png")
+            # time.sleep(3)
+            # wait_img("peggy_wait.png", confidence=0.95)
 
             # multi
             # auto_click(window.left + 1180, window.top + 682, window, waittime=0.8) # Create Squad
 
             # create multi
             # auto_click(window.left + 972, window.top + 265, window, waittime=0.8) # Create Squad
-            # auto_click(window.left + 1000, window.top + 486, window, waittime=0.8) # Create Squad
-            # auto_click(window.left + 1000, window.top + 609, window, waittime=0.8) # Create Squad
+            # auto_click(window.left + 1000, window.top + 486, window, waittime=0.8) # preset 1
+            # auto_click(window.left + 1000, window.top + 609, window, waittime=0.8) # MARCH
 
-
-            # auto_click(window.left + 949, window.top + 640, window, waittime=0.5) # March
-            click_img("MARCH.png")
-
+            # create multi preset
+            auto_click(window.left + 972, window.top + 265, window, waittime=0.8) # Create Squad
+            auto_click(window.left + 1000, window.top + 195, window, waittime=0.8) # preset 1
+            auto_click(window.left + 1000, window.top + 609, window, waittime=0.8) # MARCH
             time.sleep(3)
+            watch_img("squad-2-5.png", confidence=0.9)
 
-            wait_img("peggy_wait.png", confidence=0.95)
+
+
             # watch_img("squad.png", confidence=0.9)
 
             time.sleep(10)
