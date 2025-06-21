@@ -180,13 +180,15 @@ while True:
             if dtime:
                 sumtime += dtime
                 cnt += 1
-    print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}\n")
+    if cnt > 0:
+        print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}\n")
     total_time += sumtime
     total_cnt += cnt
 
     time.sleep(2)
 
-print(f"\ntotal : {total_time:g}, cnt: {total_cnt}, avg: {total_time/total_cnt}")
+if total_cnt > 0:
+    print(f"\ntotal : {total_time:g}, cnt: {total_cnt}, avg: {total_time/total_cnt}")
 
 
 
