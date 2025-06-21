@@ -93,17 +93,19 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
             print(e2)
             time.sleep(waittime)
             return
-    # time.sleep(waittime)
+    # wait to be activated
     for _ in range(100):
         if gw.getActiveWindow() == window:
             break
         time.sleep(0.002)
+
+    time.sleep(waittime)
     
     time2 = time.time()
     dtime1 = time2 - time1
     print('activate time: {:g}'.format(dtime1))
     # ---
-    time0 = time.time()  # 初期時間
+    # time0 = time.time()  # 初期時間
     time1 = time.time()   
     # --- メイン処理 ---
     try:
@@ -113,16 +115,11 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
         return
     time2 = time.time()
     dtime2 = time2 - time1
-    totaltime = time2 - time0
+    # totaltime = time2 - time0
     print('click time: {:g}'.format(dtime2))
 
     # ---
     return dtime1+dtime2
-
-# left, top = 312, 160
-# ヘルプボタン: 970, 842 = 658, 682
-# 緑ボタン: *, * = 1248, 559
-# get_cursor_position()
 
 
 # titles=[
@@ -148,48 +145,50 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
 #     # "[#] [6Mur 4-10] Doomsday: Last Survivors [#]",
 # ]
 
-with open('titles.txt', 'r', encoding='utf-8') as f:
-    lines = f.readlines()
 
-# 各行から改行文字を取り除く（必要に応じて）
-titles = [line.strip() for line in lines]
+if __name__ == '__main__':
+    with open('titles.txt', 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    # 各行から改行文字を取り除く（必要に応じて）
+    titles = [line.strip() for line in lines]
 
 
-listener = keyboard.Listener(on_press=on_press_key)
-listener.start()
-# global esc_pressed
-esc_pressed = False
+    listener = keyboard.Listener(on_press=on_press_key)
+    listener.start()
+    # global esc_pressed
+    esc_pressed = False
 
-print("マウスを画面外へ")
-time.sleep(3)
+    print("マウスを画面外へ")
+    time.sleep(3)
 
-total_time = 0
-total_cnt = 0
-while True:
-    if  esc_pressed: # Escが押されたらループを抜ける
-        break
-    sumtime = 0
-    cnt = 0
-    for title in titles:
-        print(title)
+    total_time = 0
+    total_cnt = 0
+    while True:
         if  esc_pressed: # Escが押されたらループを抜ける
             break
-        window = get_window(title)
-        if window:
-            dtime = auto_click(window.left + 658, window.top + 682, window, waittime=0.05)
-            if dtime:
-                sumtime += dtime
-                cnt += 1
-    if cnt > 0:
-        print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}\n")
-    total_time += sumtime
-    total_cnt += cnt
+        sumtime = 0
+        cnt = 0
+        for title in titles:
+            print(title)
+            if  esc_pressed: # Escが押されたらループを抜ける
+                break
+            window = get_window(title)
+            if window:
+                dtime = auto_click(window.left + 658, window.top + 682, window, waittime=0.05)
+                if dtime:
+                    sumtime += dtime
+                    cnt += 1
+        if cnt > 0:
+            print(f"one cycle: {sumtime:g}, cnt: {cnt}, avg: {sumtime/cnt}\n")
+        total_time += sumtime
+        total_cnt += cnt
 
-    time.sleep(2)
+        time.sleep(2)
 
-if total_cnt > 0:
-    print(f"\ntotal : {total_time:g}, cnt: {total_cnt}, avg: {total_time/total_cnt}")
+    if total_cnt > 0:
+        print(f"\ntotal : {total_time:g}, cnt: {total_cnt}, avg: {total_time/total_cnt}")
 
 
 
-listener.stop()  # キーボード検知を停止
+    listener.stop()  # キーボード検知を停止
