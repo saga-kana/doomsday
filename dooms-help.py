@@ -151,7 +151,7 @@ if __name__ == '__main__':
         lines = f.readlines()
 
     # 各行から改行文字を取り除く（必要に応じて）
-    titles = [line.strip() for line in lines]
+    titles = [line.strip() for line in lines if not line.strip().startswith('/')]
 
 
     listener = keyboard.Listener(on_press=on_press_key)
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     esc_pressed = False
 
     print("マウスを画面外へ")
-    time.sleep(3)
+    time.sleep(10)
 
     total_time = 0
     total_cnt = 0
@@ -175,7 +175,7 @@ if __name__ == '__main__':
                 break
             window = get_window(title)
             if window:
-                dtime = auto_click(window.left + 658, window.top + 682, window, waittime=0.05)
+                dtime = auto_click(window.left + 658, window.top + 682, window, waittime=0.09)
                 if dtime:
                     sumtime += dtime
                     cnt += 1
@@ -184,7 +184,7 @@ if __name__ == '__main__':
         total_time += sumtime
         total_cnt += cnt
 
-        time.sleep(2)
+        # time.sleep(2)
 
     if total_cnt > 0:
         print(f"\ntotal : {total_time:g}, cnt: {total_cnt}, avg: {total_time/total_cnt}")
