@@ -70,7 +70,7 @@ def activate_window(window):
         window.minimize()
         window.restore()
 
-def auto_click(tposx, tposy, window, waittime=1, printstep=1, gray_scale=True, confidence=0.95):
+def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     # print(window.title)
     is_click_ok = check_window_pos(tposx, tposy, window)
     if not is_click_ok:
@@ -85,8 +85,8 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1, gray_scale=True, c
     try:
         window.activate()  # 対象の画面をアクティブ化 
     except Exception as e:
-        print(e)
         time.sleep(waittime)
+        print(e)
         try:
             activate_window(window)
         except Exception as e2:
@@ -108,43 +108,11 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1, gray_scale=True, c
     # time0 = time.time()  # 初期時間
     time1 = time.time()   
     # --- メイン処理 ---
-    if esc_pressed:
-        return
     try:
-        # pyautogui.locateCenterOnScreen(f'./img/help_header.png', grayscale=gray_scale, confidence=confidence)
-        x, y = pyautogui.locateCenterOnScreen(f'./img/help_button.png', grayscale=gray_scale, confidence=confidence)
-        pyautogui.click(x=x, y=y)
-    except pyautogui.ImageNotFoundException:
-        try:
-            pyautogui.locateCenterOnScreen(f'./img/help_header.png', grayscale=gray_scale, confidence=confidence)
-        finally:
-            time2 = time.time()
-            dtime2 = time2 - time1
-            print('click time: {:g}'.format(dtime2))
-            return dtime1+dtime2
-        # Norah
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/alliance.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=x, y=y)
-            time.sleep(waittim)
-            time.sleep(5)
-        except pyautogui.ImageNotFoundException:
-            print("alliance.png")
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/alliance_help.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=x, y=y)
-            time.sleep(waittime)
-        except pyautogui.ImageNotFoundException:
-            print("alliance_help.png")
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/help_button.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=x, y=y)
-        except pyautogui.ImageNotFoundException:
-            # pyautogui.click(x=tposx, y=tposy)
-            time.sleep(waittime)
-            # auto_click(tposx, tposy, window, waittime=waittime)
-
-    
+        pyautogui.click(x=tposx, y=tposy)  # 所定の位置に移動してクリック。クリック内容を変える場合は、本行を変更。
+    except Exception as e:
+        time.sleep(waittime)
+        return
     time2 = time.time()
     dtime2 = time2 - time1
     # totaltime = time2 - time0
