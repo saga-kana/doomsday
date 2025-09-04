@@ -17,9 +17,9 @@ def get_window(window_title):
         return window[0]
     elif nwindow > 1:
         print('複数のウィンドウが見つかりました: {}'.format(window))
-        # for win in window:
-        #     if win.title == window_title:
-        #         return win
+        for win in window:
+            if win.title == window_title:
+                return win
         return None
     
 
@@ -70,7 +70,7 @@ def activate_window(window):
         window.minimize()
         window.restore()
 
-def auto_click(tposx, tposy, window, waittime=1, printstep=1, gray_scale=True, confidence=0.95):
+def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     # print(window.title)
     is_click_ok = check_window_pos(tposx, tposy, window)
     if not is_click_ok:
@@ -79,16 +79,14 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1, gray_scale=True, c
     # ---
     # global esc_pressed
     # esc_pressed = False
-    # pyautogui.FAILSAFE=False
+    pyautogui.FAILSAFE=False
     pyautogui.PAUSE=waittime
     time1 = time.time()   
     try:
-        if window.isMinimized:
-            window.restore()
         window.activate()  # 対象の画面をアクティブ化 
     except Exception as e:
-        print(e)
         time.sleep(waittime)
+        print(e)
         try:
             activate_window(window)
         except Exception as e2:
@@ -110,51 +108,11 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1, gray_scale=True, c
     # time0 = time.time()  # 初期時間
     time1 = time.time()   
     # --- メイン処理 ---
-    if esc_pressed:
-        return
     try:
-        pyautogui.locateCenterOnScreen(f'./img/help_header.png', grayscale=gray_scale, confidence=confidence)
-        pyautogui.click(x=tposx, y=tposy)
-    except pyautogui.ImageNotFoundException:
-        # ヘルプウィンドウではない
-
-
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/relogin_ok.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=x, y=y)
-            time.sleep(waittime) 
-        except pyautogui.ImageNotFoundException:
-            print("relogin_ok.png")
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/norah.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=tposx, y=tposy)
-            time.sleep(waittime)
-            time.sleep(5)
-        except pyautogui.ImageNotFoundException:
-            print("norah.png")
-
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/alliance.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=x, y=y)
-            time.sleep(waittime)
-            time.sleep(5)
-        except pyautogui.ImageNotFoundException:
-            print("alliance.png")
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/alliance_help.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=x, y=y)
-            time.sleep(waittime)
-        except pyautogui.ImageNotFoundException:
-            print("alliance_help.png")
-        try:
-            x, y = pyautogui.locateCenterOnScreen(f'./img/help_button.png', grayscale=gray_scale, confidence=confidence)
-            pyautogui.click(x=x, y=y)
-        except pyautogui.ImageNotFoundException:
-            # pyautogui.click(x=tposx, y=tposy)
-            time.sleep(waittime)
-            # auto_click(tposx, tposy, window, waittime=waittime)
-
-    
+        pyautogui.click(x=tposx, y=tposy)  # 所定の位置に移動してクリック。クリック内容を変える場合は、本行を変更。
+    except Exception as e:
+        time.sleep(waittime)
+        return
     time2 = time.time()
     dtime2 = time2 - time1
     # totaltime = time2 - time0
@@ -215,11 +173,7 @@ if __name__ == '__main__':
             print(title)
             if  esc_pressed: # Escが押されたらループを抜ける
                 break
-            try:
-                window = get_window(title)
-            except Exception as e:
-                print(e)
-                continue
+            window = get_window(title)
             if window:
                 dtime = auto_click(window.left + 658, window.top + 682, window, waittime=0.09)
                 if dtime:

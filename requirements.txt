@@ -1,4 +1,6 @@
 pyautogui
 pynput
+pyscreeze
+pillow
 pygetwindow
 opencv-python
