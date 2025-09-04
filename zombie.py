@@ -189,6 +189,9 @@ if __name__ == '__main__':
             activate_window(window)
             time.sleep(1)
 
+            
+            watch_img("peggy_JP.png", confidence=0.9)
+
             while True:
                 if esc_pressed:
                     break
@@ -201,7 +204,7 @@ if __name__ == '__main__':
                     break
 
                 try:
-                    click_img("ATTACK.png")
+                    click_img("ATTACK_JP.png", sleep_time=2.5)
                     break
                 except pyautogui.ImageNotFoundException as e:
                     auto_click(window.left + 44, window.top + 445, window, waittime=0.5) # 虫眼鏡
@@ -230,16 +233,23 @@ if __name__ == '__main__':
             # auto_click(window.left + 1000, window.top + 609, window, waittime=0.8) # MARCH
 
             # create multi preset
-            auto_click(window.left + 972, window.top + 265, window, waittime=0.8) # Create Squad
-            auto_click(window.left + 1000, window.top + 195, window, waittime=0.8) # preset 1
-            auto_click(window.left + 1000, window.top + 609, window, waittime=0.8) # MARCH
+            # auto_click(window.left + 972, window.top + 265, window, waittime=0.8) # Create Squad
+            click_img("CreateSquad_JP.png", confidence=0.9)
+            # auto_click(window.left + 1000, window.top + 195, window, waittime=0.8) # preset 1
+            # auto_click(window.left + 1100, window.top + 362, window, waittime=0.8) # preset 4
+            # click_img("4.png", confidence=0.9)
+            # click_img("peggy_big.png", confidence=0.9)
+            # auto_click(window.left + 980, window.top + 356, window, waittime=0.8) # MARCH
+            # click_img("MARCH_window_.png", confidence=0.9)
+            click_img("MARCH_JP.png", confidence=0.9)
             time.sleep(3)
-            watch_img("squad-2-5.png", confidence=0.9)
-
-
-
+            # watch_img("squad-2-5.png", confidence=0.9)
+            watch_img("peggy_JP.png", confidence=0.9)
             # watch_img("squad.png", confidence=0.9)
 
+            # wait_img("peggy_wait.png", confidence=0.9)
+
+            print("interval 10s")
             time.sleep(10)
 
-    listener.stop()  # キーボード検知を停止
+    listener.stop()  # キーボード検知を停止c

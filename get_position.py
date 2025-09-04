@@ -26,6 +26,7 @@ def get_cursor_position():
     else:
         print('対象ウィンドウ: なし')
     print('\n --- END: Get Cursor Position ---')
+    print(f'ウィンドウ内: x = {x-active_window.left}, y = {y-active_window.top}')
     return x, y, active_window
 
 

@@ -79,7 +79,7 @@ def auto_click(tposx, tposy, window, waittime=1, printstep=1):
     # ---
     # global esc_pressed
     # esc_pressed = False
-    pyautogui.FAILSAFE=False
+    # pyautogui.FAILSAFE=False
     pyautogui.PAUSE=waittime
     time1 = time.time()   
     try:
