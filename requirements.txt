@@ -4,3 +4,4 @@ pyscreeze
 pillow
 pygetwindow
 opencv-python
+pywin32
