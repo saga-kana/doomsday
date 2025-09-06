@@ -12,7 +12,7 @@ param (
 # }
 
 foreach ($number in $Numbers) {
-	Write-Host "Boot dd$number"
+	Write-Host "Boot dd $number"
 	Start-Process -FilePath 'C:\Program Files\Sandboxie-Plus\Start.exe' -ArgumentList "/box:dd$number", "C:\Program Files (x86)\Doomsday\Launcher_1.0.30\Launcher.exe"
 	Start-Sleep 60
 }
